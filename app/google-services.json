@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "53413212033",
+    "project_id": "track-mate-ede7f",
+    "storage_bucket": "track-mate-ede7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53413212033:android:823145fdb6c43a62f9c280",
+        "android_client_info": {
+          "package_name": "com.onlineattendance.trackmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53413212033-ba56n4dj85dtil11d4e6li6gclv0ccif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQe-cRBnHgpW2JlcrVfrLYGgwVS134-ts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53413212033-ba56n4dj85dtil11d4e6li6gclv0ccif.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

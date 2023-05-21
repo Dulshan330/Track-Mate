@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/theme_color"
+    tools:context=".OrganizationRemoveEmployeeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="25dp">
+
+        <LinearLayout
+            android:id="@+id/org_removeEmp1stlayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="Remove Employee"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:textColor="@color/text_color"
+                android:textSize="25dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical"
+            android:layout_below = "@id/org_removeEmp1stlayer">
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Emp No."
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/org_remove_empno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_white_background"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/text_color"
+                android:inputType="number"
+                android:padding="7dp"
+                android:hint="Enter the Employee Number"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Name of the Employee"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/org_remove_nameofemployee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_white_background"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/text_color"
+                android:padding="7dp"
+                android:hint=" - -"
+                android:focusable="false"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="NIC"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/org_remove_nic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_white_background"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/text_color"
+                android:padding="7dp"
+                android:focusable="false"
+                android:hint=" - -"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Designation"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/org_remove_designation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_white_background"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/text_color"
+                android:padding="7dp"
+                android:focusable="false"
+                android:hint=" - -"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Mobile No."
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/org_remove_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_white_background"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/text_color"
+                android:padding="7dp"
+                android:hint=" - - "
+                android:focusable="false"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Username"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
+
+            <EditText
+                android:id="@+id/org_remove_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textview_with_white_background"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/text_color"
+                android:padding="7dp"
+                android:hint=" - - "
+                android:focusable="false"
+                android:layout_marginBottom="5dp"/>
+
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="150dp"
+            android:id="@+id/org_remove_search"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="20dp"
+            android:background="@drawable/btn_blue_backgroud_with_white_stroke"
+            android:text="Search"
+            android:inputType="textCapWords"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="150dp"
+            android:id="@+id/org_remove_clearbtn"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="20dp"
+            android:background="@drawable/btn_blue_backgroud_with_white_stroke"
+            android:text="Clear"
+            android:inputType="textCapWords"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="150dp"
+            android:id="@+id/org_remove_remove"
+            android:layout_gravity="right"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:padding="5dp"
+            android:fontFamily="@font/lato_bold"
+            android:textSize="20dp"
+            android:background="@drawable/btn_white_background"
+            android:text="Remove"
+            android:inputType="textCapWords"
+            android:textColor="@color/theme_color" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>

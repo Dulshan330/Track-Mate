@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EmployeeProfileFragment">
+
+    <LinearLayout
+        android:id="@+id/first_layout_employee_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:background="@color/theme_color"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Profile"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="25dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_layout_employee_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/user_profile"
+            />
+
+        <TextView
+            android:id="@+id/emp_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mitchell Raven"
+            android:textAlignment="center"
+            android:textColor="@color/text_color"
+            android:textSize="25dp"
+            />
+        <TextView
+            android:id="@+id/emp_profile_designation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sales Manager"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="@color/text_color"
+            />
+        <TextView
+            android:id="@+id/emp_profile_empNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="66023"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textColor="@color/text_color"
+            />
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/tasksAddButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="clip_vertical"-->
+<!--            android:layout_marginStart="25dp"-->
+<!--            android:layout_marginTop="25dp"-->
+<!--            android:layout_marginEnd="25dp"-->
+<!--            android:layout_marginBottom="25dp"-->
+<!--            android:src="@drawable/baseline_add_24"-->
+<!--            app:backgroundTint="@color/theme_color"-->
+<!--            tools:ignore="SpeakableTextPresentCheck" />-->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="470dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="18dp"
+                android:text="NIC"/>
+
+            <TextView
+                android:id="@+id/emp_profile_nic"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:background="@drawable/textview_border"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="NIC"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="18dp"
+                android:text="Salary"/>
+
+            <TextView
+                android:id="@+id/emp_profile_salary"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:background="@drawable/textview_border"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="50000.00"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="18dp"
+                android:text="EPF No."/>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:background="@drawable/textview_border"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="7509"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+</FrameLayout>
