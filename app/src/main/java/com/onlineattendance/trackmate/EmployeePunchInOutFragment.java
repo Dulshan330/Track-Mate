@@ -3,6 +3,7 @@ package com.onlineattendance.trackmate;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -27,6 +28,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +38,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.onlineattendance.trackmate.databinding.FragmentEmployeePunchInOutBinding;
@@ -93,15 +98,58 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
             dateview.setText(currentDate+"\n"+currentDay);
             punchInTime.setText(currentPunchInTime);
 
-            // Create a new data object with the values for punch in time
-            Map<String, Object> data = new HashMap<>();
-            data.put("Emp_ID",getEmpNo);
-            data.put("Date",currentDate);
-            data.put("Punch_in_time",currentPunchInTime);
-            data.put("Address",locationAddress);
+            // Get the fused location provider client.
+            FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-            // Put the data to the database
-            database.child("Emp_Attendance").child(getEmpNo).child(currentDate).setValue(data);
+            // Request the last known location.
+                    fusedLocationProviderClient.getLastLocation()
+                        .addOnSuccessListener(new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Get the latitude and longitude of the location.
+                                double latitude = location.getLatitude();
+                                double longitude = location.getLongitude();
+
+                                // Create a geocoder object.
+                                Geocoder geocoder = new Geocoder(getActivity());
+
+                                // Get the address of the location.
+                                List<Address> addresses = null;
+                                try {
+                                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                // Get the first address in the list.
+                                Address address = addresses.get(0);
+                                // Get the city name.
+                                String cityName = address.getLocality();
+                                // Get the state name.
+                                String stateName = address.getAdminArea();
+                                // Get the country name.
+                                String countryName = address.getCountryName();
+
+                                String userLocationAddress =  cityName + ", " + stateName + ", " + countryName;
+
+                                // Create a new data object with the values for punch in time
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("Emp_ID",getEmpNo);
+                                data.put("Date",currentDate);
+                                data.put("Punch_in_time",currentPunchInTime);
+                                data.put("Punch_in_Address", userLocationAddress);
+
+                                // Put the data to the database
+                                database.child("Emp_Attendance").child(getEmpNo).child(currentDate).setValue(data);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle the error.
+                                Log.e("Error", e.getMessage());
+                            }
+                        });
 
             punchInBtn.setEnabled(false);
         });
@@ -115,12 +163,57 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
             String currnetDate = date.format(calendar.getTime());
             punchOutTime.setText(currentPunchOutTime);
 
-            // Create a new data object with the values for punch in time
-            Map<String,Object> data = new HashMap<>();
-            data.put("Punch_out_time",currentPunchOutTime);
+            // Get the fused location provider client.
+            FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
-            // Put the data to the database
-            database.child("Emp_Attendance").child(getEmpNo).child(currnetDate).updateChildren(data);
+            // Request the last known location.
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Get the latitude and longitude of the location.
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+
+                            // Create a geocoder object.
+                            Geocoder geocoder = new Geocoder(getActivity());
+
+                            // Get the address of the location.
+                            List<Address> addresses = null;
+                            try {
+                                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            // Get the first address in the list.
+                            Address address = addresses.get(0);
+                            // Get the city name.
+                            String cityName = address.getLocality();
+                            // Get the state name.
+                            String stateName = address.getAdminArea();
+                            // Get the country name.
+                            String countryName = address.getCountryName();
+
+                            String userLocationAddress =  cityName + ", " + stateName + ", " + countryName;
+
+
+                            // Create a new data object with the values for punch in time
+                            Map<String, Object> data = new HashMap<>();
+                            data.put("Punch_out_time",currentPunchOutTime);
+                            data.put("Punch_out_Address", userLocationAddress);
+
+                            // Put the data to the database
+                            database.child("Emp_Attendance").child(getEmpNo).child(currnetDate).updateChildren(data);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle the error.
+                            Log.e("Error", e.getMessage());
+                        }
+                    });
 
             punchOutBtn.setEnabled(false);
         });
@@ -139,37 +232,13 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
             // Enable My Location layer on the map
             mMap.setMyLocationEnabled(true);
 
-            // Get last known location
-            Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (lastLocation != null) {
-                userLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-                // Zoom in to user location with zoom level 18.0f
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(userLocation, 18.0f);
-                mMap.animateCamera(cameraUpdate);
-
-                // Get address of user's location
-                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(lastLocation.getLatitude(), lastLocation.getLongitude(), 1);
-                    if (addresses != null && !addresses.isEmpty()) {
-                        Address address = addresses.get(0);
-                        // Format the address as a string and set it to locationAddress variable
-                        StringBuilder sb = new StringBuilder();
-                        for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
-                            sb.append(address.getAddressLine(i)).append("\n");
-                        }
-                        locationAddress = sb.toString().trim();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         } else {
             // Request location permission
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
+
 
     @Override
     public void onResume() {
