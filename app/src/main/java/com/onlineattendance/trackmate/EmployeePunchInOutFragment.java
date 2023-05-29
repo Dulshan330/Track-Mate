@@ -76,6 +76,7 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
         // Initialize SharedPreferences to retrieve Emp_No
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
         String getEmpNo = sharedPreferences.getString("EMP_NO","");
+
         // Link the ID of widgets with variable
         punchInBtn =  rootView.findViewById(R.id.punch_in_btn);
         punchOutBtn = rootView.findViewById(R.id.punch_out_btn);
