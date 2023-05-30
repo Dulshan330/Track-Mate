@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:orientation="vertical">
@@ -72,7 +72,28 @@
             android:paddingTop="5dp"
             android:background="@drawable/dropdown_border"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Date"
+            android:fontFamily="@font/lato_regular"
+            android:textSize="18dp"
+            android:textColor="@color/text_color"/>
+
+        <Spinner
+            android:id="@+id/emp_attendance_dropdown_date"
+            android:layout_width="match_parent"
+            android:scrollbarSize="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/dropdown_border"/>
+
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/emp_attendance_submit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_blue_background"
@@ -94,6 +115,137 @@
             android:text="Clear"
             android:textAllCaps="false"
             android:textColor="@color/theme_color" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="410dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/text_color"
+                android:text="Date"
+                android:layout_marginRight="122dp"/>
+
+            <TextView
+                android:id="@+id/emp_attendance_getDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/text_color"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch in time"
+                android:textColor="@color/text_color"
+                android:layout_marginRight="56dp"/>
+
+            <TextView
+                android:id="@+id/emp_attendance_getPunchintime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/text_color"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch in address"
+                android:textColor="@color/text_color"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:id="@+id/emp_attendance_getPunchinaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/text_color"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch out time"
+                android:textColor="@color/text_color"
+                android:layout_marginRight="45dp"/>
+
+            <TextView
+                android:id="@+id/emp_attendance_getPunchouttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/text_color"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch out address"
+                android:textColor="@color/text_color"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:id="@+id/emp_attendance_getPunchoutaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/text_color"
+                android:text="-"/>
+
+        </LinearLayout>
+
 
 
     </LinearLayout>
