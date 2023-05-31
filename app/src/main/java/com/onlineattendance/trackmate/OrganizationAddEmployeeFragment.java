@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OrganizationAddEmployeeFragment extends Fragment {
+    // Declare the variables
     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private FragmentOrganizationAddEmployeeBinding binding;
     private EditText name, empNo, nic, designation, mobile, password, username;
