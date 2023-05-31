@@ -31,9 +31,8 @@
         android:id="@+id/org_attendance_2nd_layer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
+        android:layout_marginTop="70dp"
+        android:paddingHorizontal="10dp"
 
         android:orientation="vertical">
 
@@ -61,47 +60,96 @@
             android:inputType="number"
             android:layout_marginBottom="5dp"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Year"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="18dp"
-            android:textColor="@color/white"/>
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/org_attendance_dropdown_year"
-            android:layout_width="match_parent"
-            android:scrollbarSize="16dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:background="@drawable/textview_with_white_background"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Month"
-            android:fontFamily="@font/lato_regular"
-            android:textSize="18dp"
-            android:textColor="@color/white"/>
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Year"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
 
-        <Spinner
-            android:id="@+id/org_attendance_dropdown_month"
-            android:layout_width="match_parent"
-            android:scrollbarSize="16dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:background="@drawable/textview_with_white_background"/>
+                <Spinner
+                    android:id="@+id/org_attendance_dropdown_year"
+                    android:layout_width="100dp"
+                    android:scrollbarSize="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:background="@drawable/textview_with_white_background"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Month"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <Spinner
+                    android:id="@+id/org_attendance_dropdown_month"
+                    android:layout_width="100dp"
+                    android:scrollbarSize="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:background="@drawable/textview_with_white_background"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Date"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="18dp"
+                    android:textColor="@color/white"/>
+
+                <Spinner
+                    android:id="@+id/org_attendance_dropdown_date"
+                    android:layout_width="100dp"
+                    android:scrollbarSize="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:background="@drawable/textview_with_white_background"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/org_attendance_submit_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_white_background"
@@ -126,19 +174,135 @@
             android:textColor="@color/white"
             android:textSize="20dp" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="380dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="table view"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:textColor="@color/white"/>
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="Date"
+                android:layout_marginRight="122dp"/>
+
+            <TextView
+                android:id="@+id/org_attendance_getDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="-"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch in time"
+                android:textColor="@color/white"
+                android:layout_marginRight="56dp"/>
+
+            <TextView
+                android:id="@+id/org_attendance_getPunchintime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch in address"
+                android:textColor="@color/white"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:id="@+id/org_attendance_getPunchinaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch out time"
+                android:textColor="@color/white"
+                android:layout_marginRight="45dp"/>
+
+            <TextView
+                android:id="@+id/org_attendance_getPunchouttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="-"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:text="Punch out address"
+                android:textColor="@color/white"
+                android:layout_marginRight="20dp"/>
+
+            <TextView
+                android:id="@+id/org_attendance_getPunchoutaddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:text="-"/>
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

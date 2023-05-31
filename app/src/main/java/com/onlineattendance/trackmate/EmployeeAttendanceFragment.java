@@ -52,17 +52,16 @@ public class EmployeeAttendanceFragment extends Fragment {
         punchInAddress = rootview.findViewById(R.id.emp_attendance_getPunchinaddress);
         punchOutAddress = rootview.findViewById(R.id.emp_attendance_getPunchoutaddress);
 
+        dropdownYear = rootview.findViewById(R.id.emp_attendance_dropdown_year);
+        dropdownMonth = rootview.findViewById(R.id.emp_attendance_dropdown_month);
+        dropdownDate = rootview.findViewById(R.id.emp_attendance_dropdown_date);
 
         // Initialize SharedPreferences to retrieve Emp_No
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
         String getEmpNo = sharedPreferences.getString("EMP_NO","");
 
         // Implement the code for dropdown items
-        dropdownYear = rootview.findViewById(R.id.emp_attendance_dropdown_year);
-        dropdownMonth = rootview.findViewById(R.id.emp_attendance_dropdown_month);
-        dropdownDate = rootview.findViewById(R.id.emp_attendance_dropdown_date);
-
-        dropdownYearList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Select Year-","2023","2022"} );
+        dropdownYearList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Select Year-","2023","2022"});
         dropdownMonthList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Select Month-","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"});
         dropdownDateList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Select Date-","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
 
