@@ -76,6 +76,9 @@ public class OrganizationRemoveEmployeeFragment extends Fragment {
 
                         Toast.makeText(getActivity(), "Data retrieved successfully", Toast.LENGTH_SHORT).show();
                     }
+                    else {
+                        Toast.makeText(getActivity(), "Not exist", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 @Override

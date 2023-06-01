@@ -55,7 +55,7 @@ public class OrganizationAttendanceFragment extends Fragment {
         dropdownDate = rootview.findViewById(R.id.org_attendance_dropdown_date);
 
         // Implement the code for dropdown items
-        dropdownYearList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Year-","2023","2022"} );
+        dropdownYearList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Year-","2023"} );
         dropdownMonthList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Month-","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"});
         dropdownDateList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Date-","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
 
@@ -87,18 +87,24 @@ public class OrganizationAttendanceFragment extends Fragment {
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        // Pass the stored data to a string
-                        String getpunchInTime = snapshot.child("Punch_in_time").getValue(String.class);
-                        String getpunchInAddress = snapshot.child("Punch_in_Address").getValue(String.class);
-                        String getpunchOutTime = snapshot.child("Punch_out_time").getValue(String.class);
-                        String getpunchOutAddress = snapshot.child("Punch_out_Address").getValue(String.class);
+                        if (snapshot.exists()){
+                            // Pass the stored data to a string
+                            String getpunchInTime = snapshot.child("Punch_in_time").getValue(String.class);
+                            String getpunchInAddress = snapshot.child("Punch_in_Address").getValue(String.class);
+                            String getpunchOutTime = snapshot.child("Punch_out_time").getValue(String.class);
+                            String getpunchOutAddress = snapshot.child("Punch_out_Address").getValue(String.class);
 
-                        // Set the retrieved data to EditText Views
-                        punchDate.setText(date);
-                        punchInTime.setText(getpunchInTime);
-                        punchOutTime.setText(getpunchOutTime);
-                        punchInAddress.setText(getpunchInAddress);
-                        punchOutAddress.setText(getpunchOutAddress);
+                            // Set the retrieved data to EditText Views
+                            punchDate.setText(date);
+                            punchInTime.setText(getpunchInTime);
+                            punchOutTime.setText(getpunchOutTime);
+                            punchInAddress.setText(getpunchInAddress);
+                            punchOutAddress.setText(getpunchOutAddress);
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Attendance are not exist to related data", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
