@@ -40,8 +40,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.onlineattendance.trackmate.databinding.FragmentEmployeePunchInOutBinding;
 
 import java.io.IOException;
@@ -54,7 +57,7 @@ import java.util.Map;
 
 public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCallback {
     //  Declare all variables
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FragmentEmployeePunchInOutBinding binding;
     private GoogleMap mMap;
     private LocationManager locationManager;
@@ -84,19 +87,57 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
         punchOutTime = rootView.findViewById(R.id.punchout_time);
         dateview = rootView.findViewById(R.id.date);
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat day = new SimpleDateFormat("EEEE", Locale.getDefault());
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+        String currentPunchInTime = time.format(calendar.getTime());
+        String currentDate = date.format(calendar.getTime());
+        String currentDay = day.format(calendar.getTime());
+        String currentPunchOutTime = time.format(calendar.getTime());
+        dateview.setText(currentDate+"\n"+currentDay);
+
+        DatabaseReference reference1 = database.getReference("Emp_Attendance").child(getEmpNo).child(currentDate).child("Punch_in_time");
+        DatabaseReference reference2 = database.getReference("Emp_Attendance").child(getEmpNo).child(currentDate).child("Punch_out_time");
+        reference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    punchInBtn.setEnabled(false);
+                    String getpunchInTime = snapshot.getValue(String.class);
+                    punchInTime.setText(getpunchInTime);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        reference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    punchOutBtn.setEnabled(false);
+                    String getpunchOutTime = snapshot.getValue(String.class);
+                    punchOutTime.setText(getpunchOutTime);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         // Initialize LocationManager
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         // Set OnClickListener to punch in button to take date and time
         punchInBtn.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            SimpleDateFormat day = new SimpleDateFormat("EEEE", Locale.getDefault());
-            String currentPunchInTime = time.format(calendar.getTime());
-            String currentDate = date.format(calendar.getTime());
-            String currentDay = day.format(calendar.getTime());
-            dateview.setText(currentDate+"\n"+currentDay);
+
             punchInTime.setText(currentPunchInTime);
 
             // Get the fused location provider client.
@@ -141,7 +182,7 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                                 data.put("Punch_in_Address", userLocationAddress);
 
                                 // Put the data to the database
-                                database.child("Emp_Attendance").child(getEmpNo).child(currentDate).setValue(data);
+                                database.getReference("Emp_Attendance").child(getEmpNo).child(currentDate).setValue(data);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -157,11 +198,6 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
 
         // Set OnClickListener to punch out button to take time
         punchOutBtn.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String currentPunchOutTime = time.format(calendar.getTime());
-            String currnetDate = date.format(calendar.getTime());
             punchOutTime.setText(currentPunchOutTime);
 
             // Get the fused location provider client.
@@ -205,7 +241,7 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                             data.put("Punch_out_Address", userLocationAddress);
 
                             // Put the data to the database
-                            database.child("Emp_Attendance").child(getEmpNo).child(currnetDate).updateChildren(data);
+                            database.getReference("Emp_Attendance").child(getEmpNo).child(currentDate).updateChildren(data);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
