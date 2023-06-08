@@ -68,7 +68,7 @@ public class Employee_Navigation extends AppCompatActivity {
         editor.clear();
         editor.apply();
         // Start the employee login activity
-        Intent intent = new Intent(this,Employee_Login.class);
+        Intent intent = new Intent(this,Login_Selection.class);
         startActivity(intent);
     }
 

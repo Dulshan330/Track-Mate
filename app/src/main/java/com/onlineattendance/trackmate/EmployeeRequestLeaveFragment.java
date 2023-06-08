@@ -22,8 +22,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.onlineattendance.trackmate.databinding.FragmentEmployeeRequestLeaveBinding;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +39,7 @@ import java.util.Map;
 public class EmployeeRequestLeaveFragment extends Fragment {
 
     // Declare all variables
-    DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FragmentEmployeeRequestLeaveBinding binding;
     private Spinner dropdown;
     private ArrayAdapter<String> dropDownList;
@@ -138,36 +141,48 @@ public class EmployeeRequestLeaveFragment extends Fragment {
                 Toast.makeText(getActivity(), "Please fill out all fields.", Toast.LENGTH_SHORT).show();
             }
             else {
-                // Create a new data object with the values
-                Map<String, Object> data = new HashMap<>();
-                data.put("Emp No",getEmpNo);
-                data.put("Leave Type",getLeaveType);
-                data.put("Reason",getReason);
-                data.put("Begin Date",getBeginDate);
-                data.put("End Date", getEndDate);
-
-                // Clear the Entered data
-                dropdown.setSelection(0);
-                reason.setText("");
-                calendarInput.setText("");
-                calendarInput2.setText("");
-
-                // Push the data to the database
-                database.child("Leave Request").child(getEmpNo).setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                DatabaseReference getEmpName = database.getReference("Users").child(getEmpNo);
+                getEmpName.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(getActivity(), "Leave Request is Submitted", Toast.LENGTH_SHORT).show();
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String getEmployeeName = snapshot.child("Name_of_the_Employee").getValue(String.class);
+
+                        // Create a new data object with the values
+                        Map<String, Object> data = new HashMap<>();
+                        data.put("Name_of_the_Employee",getEmployeeName);
+                        data.put("Emp_No",getEmpNo);
+                        data.put("Leave_Type",getLeaveType);
+                        data.put("Reason",getReason);
+                        data.put("Begin_Date",getBeginDate);
+                        data.put("End_Date", getEndDate);
+
+                        // Clear the Entered data
+                        dropdown.setSelection(0);
+                        reason.setText("");
+                        calendarInput.setText("");
+                        calendarInput2.setText("");
+
+                        // Push the data to the database
+                        database.getReference("Leave Request").child(getEmpNo).setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getActivity(), "Leave Request is Submitted", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
-
 
         // Set OnClickListener to  reset button to reset the input field
         resetBtn.setOnClickListener(v -> {

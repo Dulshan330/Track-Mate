@@ -94,8 +94,12 @@ public class OrganizationRemoveEmployeeFragment extends Fragment {
             String removeLogins = username.getText().toString();
             DatabaseReference removeEmployee = database.getReference("Users").child(removeEmpNo);
             DatabaseReference removeUsername = database.getReference("Employee_Login").child(removeLogins);
+            DatabaseReference removeSalary = database.getReference("EMP_Salary").child(removeEmpNo);
+            DatabaseReference removeAttendance = database.getReference("Emp_Attendance").child(removeEmpNo);
             removeEmployee.removeValue();
             removeUsername.removeValue();
+            removeSalary.removeValue();
+            removeAttendance.removeValue();
 
 
             // call to dataClearmethod to clear text fields
