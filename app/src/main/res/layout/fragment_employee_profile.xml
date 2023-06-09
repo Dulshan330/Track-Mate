@@ -36,12 +36,19 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
-            android:id="@+id/emp_profile_photo"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:src="@drawable/user_profile"
-            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            app:cardCornerRadius="120dp">
+            <ImageView
+                android:id="@+id/emp_profile_photo"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:src="@drawable/user_profile"
+                />
+        </androidx.cardview.widget.CardView>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/emp_profilePhotoButton"

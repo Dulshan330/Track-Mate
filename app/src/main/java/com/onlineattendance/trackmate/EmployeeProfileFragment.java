@@ -216,8 +216,9 @@ public class EmployeeProfileFragment extends Fragment {
     }
 
     private void retrieveProfilePhoto() {
-        String empNoValue = empNo.getText().toString();
-        DatabaseReference empRef = database.getReference("Users").child(empNoValue);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
+        String getEmpNo = sharedPreferences.getString("EMP_NO", "");
+        DatabaseReference empRef = database.getReference("Users").child(getEmpNo);
         empRef.child("profile_photo_url").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
