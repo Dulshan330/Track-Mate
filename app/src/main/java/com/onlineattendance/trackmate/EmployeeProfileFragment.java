@@ -1,10 +1,15 @@
 package com.onlineattendance.trackmate;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -35,10 +44,11 @@ import com.google.firebase.storage.UploadTask;
 import com.onlineattendance.trackmate.databinding.FragmentEmployeeProfileBinding;
 import com.squareup.picasso.Picasso;
 
-import static android.app.Activity.RESULT_OK;
-
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.app.Activity.RESULT_OK;
 
 public class EmployeeProfileFragment extends Fragment {
 
@@ -47,6 +57,7 @@ public class EmployeeProfileFragment extends Fragment {
     private TextView name, designation, empNo, nic, hourlyRate, otRate, allowance, reimburse;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private static final int PICK_IMAGE_REQUEST_CODE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
     private FirebaseFirestore firestore;
     private Uri selectedImageUri;
     private ImageView profilePhoto;
@@ -92,19 +103,19 @@ public class EmployeeProfileFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String getname = snapshot.child("Name_of_the_Employee").getValue(String.class);
-                    String getNic = snapshot.child("NIC").getValue(String.class);
-                    String getDesignation = snapshot.child("Designation").getValue(String.class);
+                    String getdesig = snapshot.child("Designation").getValue(String.class);
+                    String getnic = snapshot.child("NIC").getValue(String.class);
 
-                    empNo.setText(getEmpNo);
                     name.setText(getname);
-                    nic.setText(getNic);
-                    designation.setText(getDesignation);
+                    designation.setText(getdesig);
+                    empNo.setText(getEmpNo);
+                    nic.setText(getnic);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -112,33 +123,189 @@ public class EmployeeProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String getHourlyRate = snapshot.child("Hourly_Rate").getValue(String.class);
-                    String getOTRate = snapshot.child("OT_Rate").getValue(String.class);
-                    String getAllowance = snapshot.child("Atterdance_Allowance").getValue(String.class);
-                    String getReimburse = snapshot.child("Reimburse").getValue(String.class);
+                    String gethourlyRate = snapshot.child("Hourly_Rate").getValue(String.class);
+                    String getotRate = snapshot.child("OT_Rate").getValue(String.class);
+                    String getallowance = snapshot.child("Atterdance_Allowance").getValue(String.class);
+                    String getreimburse = snapshot.child("Reimburse").getValue(String.class);
 
-                    hourlyRate.setText(getHourlyRate);
-                    otRate.setText(getOTRate);
-                    allowance.setText(getAllowance);
-                    reimburse.setText(getReimburse);
+                    hourlyRate.setText(gethourlyRate);
+                    otRate.setText(getotRate);
+                    allowance.setText(getallowance);
+                    reimburse.setText(getreimburse);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Retrieve and display the profile photo
-        retrieveProfilePhoto();
 
         passwordChangeButton.setOnClickListener(v -> {
             showpopup();
         });
 
+        // Retrieve and display the profile photo
+        retrieveProfilePhoto();
+
         return rootView;
     }
+
+    private void openImagePicker() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Choose an option")
+                .setItems(new CharSequence[]{"Take Photo", "Choose from Gallery"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0:
+                                openCamera();
+                                break;
+                            case 1:
+                                openGallery();
+                                break;
+                        }
+                    }
+                })
+                .show();
+    }
+
+    private void openCamera() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_IMAGE_CAPTURE);
+        } else {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    private void openGallery() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_IMAGE_REQUEST_CODE);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUri = data.getData();
+            binding.empProfilePhoto.setImageURI(selectedImageUri);
+            uploadImageToFirestore();
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            selectedImageUri = getImageUri(requireContext(), imageBitmap);
+            binding.empProfilePhoto.setImageBitmap(imageBitmap);
+            uploadImageToFirestore();
+        }
+    }
+
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Profile Photo", null);
+        return Uri.parse(path);
+    }
+
+    private void uploadImageToFirestore() {
+        if (selectedImageUri != null) {
+
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
+            String getEmpNo = sharedPreferences.getString("EMP_NO", "");
+            // Show progress dialog
+            final PopupWindow popupWindow = new PopupWindow(requireContext());
+            View popupView = getLayoutInflater().inflate(R.layout.popup_progress, null);
+            popupWindow.setContentView(popupView);
+            popupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
+
+            // Create a storage reference from Firebase
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("profile_photos/" + getEmpNo + ".jpg");
+
+            // Upload the file to Firebase Storage
+            storageReference.putFile(selectedImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Get the download URL of the uploaded file
+                            storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    // Save the download URL to Firestore
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("photoUrl", uri.toString());
+
+                                    firestore.collection("employees").document(getEmpNo).set(data)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    // Dismiss progress dialog
+                                                    popupWindow.dismiss();
+                                                    Toast.makeText(getContext(), "Profile photo uploaded successfully", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // Dismiss progress dialog
+                                                    popupWindow.dismiss();
+                                                    Toast.makeText(getContext(), "Failed to upload profile photo", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Dismiss progress dialog
+                            popupWindow.dismiss();
+                            Toast.makeText(getContext(), "Failed to upload profile photo", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            // Track the progress of the upload
+                            double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                            TextView progressText = popupView.findViewById(R.id.popup_progress_text);
+                            progressText.setText("Uploading: " + (int) progress + "%");
+                        }
+                    });
+        }
+    }
+
+    private void retrieveProfilePhoto() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
+        String getEmpNo = sharedPreferences.getString("EMP_NO", "");
+
+        firestore.collection("employees").document(getEmpNo).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String downloadUrl = documentSnapshot.getString("photoUrl");
+                            if (downloadUrl != null) {
+                                Picasso.get().load(downloadUrl).into(profilePhoto);
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), "Error retrieving profile photo: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     private void showpopup(){
         LayoutInflater inflater = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -203,93 +370,14 @@ public class EmployeeProfileFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
             }
         });
     }
 
-    private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
-    }
-
-    private void retrieveProfilePhoto() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
-        String getEmpNo = sharedPreferences.getString("EMP_NO", "");
-        DatabaseReference empRef = database.getReference("Users").child(getEmpNo);
-        empRef.child("profile_photo_url").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String downloadUrl = snapshot.getValue(String.class);
-                    if (downloadUrl != null) {
-                        Picasso.get().load(downloadUrl).into(profilePhoto);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Error retrieving profile photo: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            binding.empProfilePhoto.setImageURI(selectedImageUri);
-            uploadImageToFirestore();
-        }
-    }
-
-    private void uploadImageToFirestore() {
-        String empNoValue = empNo.getText().toString();
-        String filename = empNoValue + ".jpg";
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imageRef = storageRef.child("profile_photos").child(filename);
-
-        imageRef.putFile(selectedImageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageRef.getDownloadUrl()
-                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String downloadUrl = uri.toString();
-                                        saveDownloadUrlToFirestore(downloadUrl);
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Error uploading image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void saveDownloadUrlToFirestore(String downloadUrl) {
-        String empNoValue = empNo.getText().toString();
-        DatabaseReference empRef = database.getReference("Users").child(empNoValue);
-        empRef.child("profile_photo_url").setValue(downloadUrl)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getActivity(), "Profile photo uploaded successfully!", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(), "Error saving profile photo: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
