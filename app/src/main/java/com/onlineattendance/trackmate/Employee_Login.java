@@ -59,6 +59,7 @@ public class Employee_Login extends AppCompatActivity {
                                 SharedPreferences sharedPreferences = getSharedPreferences("EMP_INFO", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString("EMP_NO", getEmpNo);
+                                editor.putString("Username", getusername);
                                 editor.apply();
 
                                 //Navigate to Employee_Navigation screen

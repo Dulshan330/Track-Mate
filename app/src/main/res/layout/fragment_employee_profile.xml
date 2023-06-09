@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,18 +28,31 @@
     </LinearLayout>
 
     <LinearLayout
+        android:paddingVertical="5dp"
         android:id="@+id/second_layout_employee_profile"
         android:layout_width="match_parent"
+        android:layout_below="@id/first_layout_employee_profile"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:orientation="vertical"
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/emp_profile_photo"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:src="@drawable/user_profile"
             />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/emp_profilePhotoButton"
+            android:layout_width="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/white"
+            android:inputType="textCapWords"
+            android:background="@drawable/btn_blue_background"
+            android:text="Take Profile Photo" />
 
         <TextView
             android:id="@+id/emp_profile_name"
@@ -69,124 +82,185 @@
             android:textColor="@color/text_color"
             />
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/tasksAddButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="clip_vertical"-->
-<!--            android:layout_marginStart="25dp"-->
-<!--            android:layout_marginTop="25dp"-->
-<!--            android:layout_marginEnd="25dp"-->
-<!--            android:layout_marginBottom="25dp"-->
-<!--            android:src="@drawable/baseline_add_24"-->
-<!--            app:backgroundTint="@color/theme_color"-->
-<!--            tools:ignore="SpeakableTextPresentCheck" />-->
-
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
+        android:layout_below="@id/second_layout_employee_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="470dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/third_layout_employee_profile"
+            android:paddingVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="150dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textSize="18dp"
-                android:text="NIC"/>
+                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/emp_profile_nic"
-                android:layout_width="200dp"
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp"
+                    android:text="NIC"/>
+
+                <TextView
+                    android:id="@+id/emp_profile_nic"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:background="@drawable/textview_border"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="-"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:background="@drawable/textview_border"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="NIC"/>
+                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp"
+                    android:text="Hourly Rate"/>
+
+                <TextView
+                    android:id="@+id/emp_profile_hourltRate"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:background="@drawable/textview_border"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="-"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp"
+                    android:text="OT Rate"/>
+
+                <TextView
+                    android:id="@+id/emp_profile_OTRate"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:background="@drawable/textview_border"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="-"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp"
+                    android:text="Allowance"/>
+
+                <TextView
+                    android:id="@+id/emp_profile_allowance"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:background="@drawable/textview_border"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="-"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="18dp"
+                    android:text="Reimburse"/>
+
+                <TextView
+                    android:id="@+id/emp_profile_reimburse"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:background="@drawable/textview_border"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="-"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/emp_profile_changePassword"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:layout_margin="25dp"
+                android:layout_gravity="end"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@color/white"
+                android:inputType="textCapWords"
+                android:background="@drawable/btn_blue_background"
+                android:text="Change Password" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:orientation="horizontal">
+    </ScrollView>
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textSize="18dp"
-                android:text="Salary"/>
-
-            <TextView
-                android:id="@+id/emp_profile_salary"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:background="@drawable/textview_border"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="50000.00"/>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="50dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textSize="18dp"
-                android:text="EPF No."/>
-
-            <TextView
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:background="@drawable/textview_border"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="7509"/>
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-
-
-
-
-</FrameLayout>
+</RelativeLayout>

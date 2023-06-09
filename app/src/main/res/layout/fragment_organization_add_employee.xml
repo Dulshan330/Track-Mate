@@ -66,14 +66,14 @@
                 android:layout_marginBottom="5dp"/>
 
             <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp"
-            android:text="Emp No."
-            android:fontFamily="@font/lato_regular"
-            android:textSize="18dp"
-            android:textColor="@color/white"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="Emp No."
+                android:fontFamily="@font/lato_regular"
+                android:textSize="18dp"
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/org_dash_empno"
@@ -155,7 +155,7 @@
                 android:textSize="18dp"
                 android:textColor="@color/text_color"
                 android:padding="7dp"
-                android:hint="Enter the NIC"
+                android:hint="Enter the Mobile Number"
                 android:layout_marginBottom="5dp"/>
 
             <TextView
