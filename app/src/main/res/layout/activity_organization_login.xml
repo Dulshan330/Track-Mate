@@ -135,8 +135,6 @@
             android:inputType="textCapWords"
             android:textColor="@color/theme_color" />
 
-
-
     </LinearLayout>
 
 </LinearLayout>

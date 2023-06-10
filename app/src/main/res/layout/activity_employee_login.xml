@@ -8,8 +8,6 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -27,8 +25,7 @@
         android:text="Sign In to continue."
         android:textSize="18sp"
         android:fontFamily="@font/lato_regular"
-        android:textColor="@color/text_color"
-        />
+        android:textColor="@color/text_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,7 +79,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,8 +105,6 @@
             android:background="@drawable/btn_blue_background"
             android:text="Sign In"
             android:textColor="#ffffff" />
-
-
 
     </LinearLayout>
 

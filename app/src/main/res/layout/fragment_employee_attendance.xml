@@ -116,7 +116,6 @@
             android:textAllCaps="false"
             android:textColor="@color/theme_color" />
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -245,8 +244,6 @@
                 android:text="-"/>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

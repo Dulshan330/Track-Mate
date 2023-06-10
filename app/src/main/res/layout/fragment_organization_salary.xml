@@ -153,8 +153,6 @@
             android:inputType="number"
             android:layout_marginBottom="5dp"/>
 
-
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/org_salary_submit_button"
             android:layout_width="150dp"
@@ -180,9 +178,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20dp" />
-
-
-
 
     </LinearLayout>
 

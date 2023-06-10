@@ -32,20 +32,13 @@
                 android:textSize="25dp"/>
         </LinearLayout>
 
-
         <ListView
             android:id="@+id/org_requestedLeave_listView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="Scrollable content"
-            >
+            android:contentDescription="Scrollable content">
 
         </ListView>
-
-
-
-
-
 
     </LinearLayout>
 

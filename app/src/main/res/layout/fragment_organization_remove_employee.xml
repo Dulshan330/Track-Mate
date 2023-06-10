@@ -39,8 +39,6 @@
             android:orientation="vertical"
             android:layout_below = "@id/org_removeEmp1stlayer">
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,8 +183,6 @@
                 android:focusable="false"
                 android:layout_marginBottom="5dp"/>
 
-
-
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -232,8 +228,6 @@
             android:text="Remove"
             android:inputType="textCapWords"
             android:textColor="@color/theme_color" />
-
-
 
     </LinearLayout>
 

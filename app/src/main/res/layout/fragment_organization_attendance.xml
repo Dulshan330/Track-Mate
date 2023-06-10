@@ -6,7 +6,6 @@
     android:background="@color/theme_color"
     tools:context=".OrganizationAttendanceFragment">
 
-
     <LinearLayout
         android:id="@+id/org_attendance_1st_layer"
         android:layout_width="match_parent"
@@ -302,12 +301,6 @@
 
         </LinearLayout>
 
-
-
     </LinearLayout>
-
-
-
-
 
 </FrameLayout>

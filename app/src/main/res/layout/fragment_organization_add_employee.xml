@@ -40,8 +40,6 @@
             android:orientation="vertical"
             android:layout_below = "@id/org_addEmp1stlayer">
 
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

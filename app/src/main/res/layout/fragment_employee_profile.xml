@@ -49,7 +49,6 @@
                 />
         </androidx.cardview.widget.CardView>
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/emp_profilePhotoButton"
             android:layout_width="wrap_content"
