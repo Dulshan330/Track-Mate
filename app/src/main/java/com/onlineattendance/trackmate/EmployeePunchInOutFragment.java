@@ -87,6 +87,7 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
         punchOutTime = rootView.findViewById(R.id.punchout_time);
         dateview = rootView.findViewById(R.id.date);
 
+        // Get current date, day, and time
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         SimpleDateFormat day = new SimpleDateFormat("EEEE", Locale.getDefault());
@@ -98,8 +99,10 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
         String currentPunchOutTime = time.format(calendar.getTime());
         dateview.setText(currentDate+"\n"+currentDay);
 
+        // Get a reference to the Punch_in_time and Punch_out_time in the database for the current employee and date
         DatabaseReference reference1 = database.getReference("Emp_Attendance").child(getEmpNo).child(currentDate).child("Punch_in_time");
         DatabaseReference reference2 = database.getReference("Emp_Attendance").child(getEmpNo).child(currentDate).child("Punch_out_time");
+        // Listen for changes in the Punch_in_time value in the database
         reference1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -109,10 +112,9 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                     punchInTime.setText(getpunchInTime);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         reference2.addValueEventListener(new ValueEventListener() {
@@ -124,10 +126,9 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                     punchOutTime.setText(getpunchOutTime);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -162,14 +163,10 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-
-                                // Get the first address in the list.
+                                // Get the address in the list.
                                 Address address = addresses.get(0);
-                                // Get the city name.
                                 String cityName = address.getLocality();
-                                // Get the state name.
                                 String stateName = address.getAdminArea();
-                                // Get the country name.
                                 String countryName = address.getCountryName();
 
                                 String userLocationAddress =  cityName + ", " + stateName + ", " + countryName;
@@ -192,7 +189,6 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                                 Log.e("Error", e.getMessage());
                             }
                         });
-
             punchInBtn.setEnabled(false);
         });
 
@@ -223,17 +219,13 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                                 throw new RuntimeException(e);
                             }
 
-                            // Get the first address in the list.
+                            // Get the address in the list.
                             Address address = addresses.get(0);
-                            // Get the city name.
                             String cityName = address.getLocality();
-                            // Get the state name.
                             String stateName = address.getAdminArea();
-                            // Get the country name.
                             String countryName = address.getCountryName();
 
                             String userLocationAddress =  cityName + ", " + stateName + ", " + countryName;
-
 
                             // Create a new data object with the values for punch in time
                             Map<String, Object> data = new HashMap<>();
@@ -251,7 +243,6 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
                             Log.e("Error", e.getMessage());
                         }
                     });
-
             punchOutBtn.setEnabled(false);
         });
 
@@ -265,7 +256,6 @@ public class EmployeePunchInOutFragment extends Fragment implements OnMapReadyCa
         // Check location permission
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-
             // Enable My Location layer on the map
             mMap.setMyLocationEnabled(true);
 

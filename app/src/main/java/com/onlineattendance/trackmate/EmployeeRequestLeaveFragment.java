@@ -48,8 +48,6 @@ public class EmployeeRequestLeaveFragment extends Fragment {
     private Button resetBtn,applyBtn;
     private TextView reason;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -194,6 +192,4 @@ public class EmployeeRequestLeaveFragment extends Fragment {
 
         return rootview;
     }
-
-
 }

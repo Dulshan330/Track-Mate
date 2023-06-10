@@ -109,9 +109,7 @@ public class OrganizationAddEmployeeFragment extends Fragment {
                 // Push the data to the database
                 database.child("Employee_Login").child(empUsername).setValue(user);
             }
-
         });
-
         return rootview;
     }
 
@@ -125,5 +123,4 @@ public class OrganizationAddEmployeeFragment extends Fragment {
         username.setText(null);
         password.setText(null);
     }
-
 }

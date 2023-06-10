@@ -49,6 +49,7 @@ public class OrganizationRequestedLeaveFragment extends Fragment {
         binding = FragmentOrganizationRequestedLeaveBinding.inflate(inflater,container,false);
         View rootview = binding.getRoot();
 
+        // Link the ID of widgets with variable
         listView = rootview.findViewById(R.id.org_requestedLeave_listView);
 
         adapter = new ArrayAdapter<EmployeeLeaves>(requireContext(), android.R.layout.simple_list_item_1, leavesList){
@@ -73,9 +74,10 @@ public class OrganizationRequestedLeaveFragment extends Fragment {
                 TextView textView = view.findViewById(android.R.id.text1);
                 textView.setText(itemText);
 
-                textView.setTextColor(Color.BLACK); // Set text color to white
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20); // Set font size in sp (20sp)
-                textView.setPadding(20, 20, 20, 20); // Set padding in pixels (20px)
+                // Set text color, font size, padding
+                textView.setTextColor(Color.BLACK);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                textView.setPadding(20, 20, 20, 20);
 
                 // Create a background drawable with border
                 Drawable backgroundDrawable = getResources().getDrawable(R.drawable.listview_background);
@@ -86,7 +88,7 @@ public class OrganizationRequestedLeaveFragment extends Fragment {
         };
         listView.setAdapter(adapter);
 
-        // Fetch and display the maintenance data from the database
+        // Fetch and display the Leaves data from the database
         fetchLeavesData();
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -195,6 +197,7 @@ public class OrganizationRequestedLeaveFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     String empNo = dataSnapshot.getKey();
 
+                    // Retrieve the values for each leave request field
                     String name_of_the_Employee = dataSnapshot.child("Name_of_the_Employee").getValue(String.class);
                     String emp_No = dataSnapshot.child("Emp_No").getValue(String.class);
                     String leave_Type = dataSnapshot.child("Leave_Type").getValue(String.class);
@@ -218,8 +221,10 @@ public class OrganizationRequestedLeaveFragment extends Fragment {
     }
 
     public class EmployeeLeaves{
+        // Declare private fields to hold the leave request data
         private String Name_of_the_Employee,Emp_No,Leave_Type,Reason,Begin_Date,End_Date;
 
+        // Constructor to initialize the leave request data
         public EmployeeLeaves(String name_of_the_Employee, String emp_No, String leave_Type, String reason, String begin_Date, String end_Date) {
             Name_of_the_Employee = name_of_the_Employee;
             Emp_No = emp_No;
@@ -229,6 +234,7 @@ public class OrganizationRequestedLeaveFragment extends Fragment {
             End_Date = end_Date;
         }
 
+        // Getter methods to retrieve the data
         public String getName_of_the_Employee() {
             return Name_of_the_Employee;
         }

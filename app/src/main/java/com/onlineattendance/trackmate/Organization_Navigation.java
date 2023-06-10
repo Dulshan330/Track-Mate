@@ -38,7 +38,6 @@ public class Organization_Navigation extends AppCompatActivity {
             }
             return true;
         });
-
     }
 
     // Method to replace the current fragment with another fragment

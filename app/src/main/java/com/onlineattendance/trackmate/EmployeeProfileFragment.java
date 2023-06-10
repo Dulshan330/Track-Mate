@@ -72,9 +72,11 @@ public class EmployeeProfileFragment extends Fragment {
         FirebaseApp.initializeApp(requireContext());
         firestore = FirebaseFirestore.getInstance();
 
+        // Retrieve the employee number from SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
         String getEmpNo = sharedPreferences.getString("EMP_NO", "");
 
+        // Find views by their IDs
         name = rootView.findViewById(R.id.emp_profile_name);
         designation = rootView.findViewById(R.id.emp_profile_designation);
         empNo = rootView.findViewById(R.id.emp_profile_empNo);
@@ -89,6 +91,7 @@ public class EmployeeProfileFragment extends Fragment {
         mTakePictureButton = rootView.findViewById(R.id.emp_profilePhotoButton);
         passwordChangeButton = rootView.findViewById(R.id.emp_profile_changePassword);
 
+        // Set click listener for the "Take Picture" button
         mTakePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,16 +99,21 @@ public class EmployeeProfileFragment extends Fragment {
             }
         });
 
+        // Get a reference to the employee's login data in the Firebase Realtime Database
         DatabaseReference getEmpLogins = database.getReference("Users").child(getEmpNo);
         DatabaseReference getSalaryRates = database.getReference("EMP_Salary").child(getEmpNo);
+
+        // Add a value event listener to retrieve and display the employee's login data
         getEmpLogins.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    // Retrieve the relevant data from the snapshot
                     String getname = snapshot.child("Name_of_the_Employee").getValue(String.class);
                     String getdesig = snapshot.child("Designation").getValue(String.class);
                     String getnic = snapshot.child("NIC").getValue(String.class);
 
+                    // Set the retrieved data to the corresponding views
                     name.setText(getname);
                     designation.setText(getdesig);
                     empNo.setText(getEmpNo);
@@ -119,15 +127,18 @@ public class EmployeeProfileFragment extends Fragment {
             }
         });
 
+        // Add a value event listener to retrieve and display the employee's salary rates
         getSalaryRates.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    // Retrieve the salary rates from the snapshot
                     String gethourlyRate = snapshot.child("Hourly_Rate").getValue(String.class);
                     String getotRate = snapshot.child("OT_Rate").getValue(String.class);
                     String getallowance = snapshot.child("Atterdance_Allowance").getValue(String.class);
                     String getreimburse = snapshot.child("Reimburse").getValue(String.class);
 
+                    // Set the retrieved salary rates to the corresponding views
                     hourlyRate.setText(gethourlyRate);
                     otRate.setText(getotRate);
                     allowance.setText(getallowance);
@@ -141,6 +152,7 @@ public class EmployeeProfileFragment extends Fragment {
             }
         });
 
+        // Change the password
         passwordChangeButton.setOnClickListener(v -> {
             showpopup();
         });
@@ -152,6 +164,7 @@ public class EmployeeProfileFragment extends Fragment {
     }
 
     private void openImagePicker() {
+        // Create an alert dialog to choose an option
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Choose an option")
                 .setItems(new CharSequence[]{"Take Photo", "Choose from Gallery"}, new DialogInterface.OnClickListener() {
@@ -171,9 +184,12 @@ public class EmployeeProfileFragment extends Fragment {
     }
 
     private void openCamera() {
+        // Check camera permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // Request camera permission if not granted
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_IMAGE_CAPTURE);
         } else {
+            // Open camera to take a picture
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -182,9 +198,12 @@ public class EmployeeProfileFragment extends Fragment {
     }
 
     private void openGallery() {
+        // Check read external storage permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Request read external storage permission if not granted
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_IMAGE_REQUEST_CODE);
         } else {
+            // Open gallery to choose an image
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
             startActivityForResult(intent, PICK_IMAGE_REQUEST_CODE);
@@ -194,6 +213,7 @@ public class EmployeeProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // Handle the result of image selection or capture
         if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             selectedImageUri = data.getData();
             binding.empProfilePhoto.setImageURI(selectedImageUri);
@@ -208,6 +228,7 @@ public class EmployeeProfileFragment extends Fragment {
     }
 
     private Uri getImageUri(Context context, Bitmap bitmap) {
+        // Convert the bitmap to a URI
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Profile Photo", null);
@@ -216,7 +237,7 @@ public class EmployeeProfileFragment extends Fragment {
 
     private void uploadImageToFirestore() {
         if (selectedImageUri != null) {
-
+            // Get the employee number from SharedPreferences
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
             String getEmpNo = sharedPreferences.getString("EMP_NO", "");
             // Show progress dialog
@@ -283,6 +304,7 @@ public class EmployeeProfileFragment extends Fragment {
     }
 
     private void retrieveProfilePhoto() {
+        // Get the employee number from SharedPreferences
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("EMP_INFO", Context.MODE_PRIVATE);
         String getEmpNo = sharedPreferences.getString("EMP_NO", "");
 
@@ -345,7 +367,7 @@ public class EmployeeProfileFragment extends Fragment {
                         if (snapshot.exists()){
                             String getExistCurrentPassword = snapshot.child("Password").getValue(String.class);
 
-                            if ((getExistCurrentPassword.equals(getCurrentPassword)) && (getNewPassword.equals(getConfirmPassword))){
+                            if ((getExistCurrentPassword.equals(getCurrentPassword)) && (getNewPassword.equals(getConfirmPassword))&&(isValidPassword(getNewPassword))){
                                 // Create a new data object with the input values
                                 Map<String, Object> data = new HashMap<>();
                                 data.put("Password",getNewPassword);
@@ -362,6 +384,9 @@ public class EmployeeProfileFragment extends Fragment {
 
                                 Toast.makeText(getActivity(), "Password update successfully", Toast.LENGTH_SHORT).show();
                             }
+                            else {
+                                Toast.makeText(getActivity(), "Passwords do not match or are invalid", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
 
@@ -374,6 +399,11 @@ public class EmployeeProfileFragment extends Fragment {
         });
     }
 
+    // Validate password format
+    private boolean isValidPassword(String password) {
+        String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$%^&+=_])(?=\\S+$).{8,}$";
+        return password.matches(passwordPattern);
+    }
 
     @Override
     public void onDestroyView() {

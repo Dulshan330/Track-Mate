@@ -21,7 +21,6 @@ public class Employee_Navigation extends AppCompatActivity {
     // Declare all variables
     private ActivityEmployeeNavigationBinding binding;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +44,6 @@ public class Employee_Navigation extends AppCompatActivity {
                     logout();
                     break;
             }
-
             return true;
         });
 
@@ -59,7 +57,6 @@ public class Employee_Navigation extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
     // Method to logout the user
     private void logout(){
         // Clear the data stored in SharedPreferences
@@ -71,5 +68,4 @@ public class Employee_Navigation extends AppCompatActivity {
         Intent intent = new Intent(this,Login_Selection.class);
         startActivity(intent);
     }
-
 }

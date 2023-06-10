@@ -20,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,Login_Selection.class);
                 startActivity(intent);
             }
-        },3300);
+        },2800);
     }
 }

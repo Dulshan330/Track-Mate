@@ -64,7 +64,6 @@ public class Employee_Login extends AppCompatActivity {
 
                                 //Navigate to Employee_Navigation screen
                                 openEmployeeNavigation();
-
                             }
                             else {
                                 Toast.makeText(getApplicationContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
@@ -80,11 +79,10 @@ public class Employee_Login extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
-
     }
+
 //   Navigation method to other screen
     private void openEmployeeNavigation(){
         Intent intent = new Intent(this,Employee_Navigation.class);

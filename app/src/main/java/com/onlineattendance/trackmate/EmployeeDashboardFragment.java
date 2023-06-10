@@ -28,11 +28,6 @@ public class EmployeeDashboardFragment extends Fragment {
     private LinearLayout requestLeave;
     private LinearLayout attendance;
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +56,6 @@ public class EmployeeDashboardFragment extends Fragment {
         return view;
     }
 
-
 //   Create a method to transfer other fragments from dashboard
     private void onTransferNewFragment(Fragment fragment){
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -70,6 +64,9 @@ public class EmployeeDashboardFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

@@ -86,7 +86,6 @@ public class EmployeeAttendanceFragment extends Fragment {
                 Toast.makeText(getActivity(), "Please fill out all fields.", Toast.LENGTH_SHORT).show();
             }else {
                 DatabaseReference reference = database.getReference("Emp_Attendance").child(getEmpNo).child(date);
-
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -108,7 +107,6 @@ public class EmployeeAttendanceFragment extends Fragment {
                         else {
                             Toast.makeText(getActivity(), "Attendance are not exist to related data", Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override
@@ -117,8 +115,6 @@ public class EmployeeAttendanceFragment extends Fragment {
                     }
                 });
             }
-
-
         });
 
         // Set OnClickListener to reset the input fields
@@ -128,8 +124,6 @@ public class EmployeeAttendanceFragment extends Fragment {
                 dataClearMethod();
             }
         });
-
-
         return rootview;
     }
 

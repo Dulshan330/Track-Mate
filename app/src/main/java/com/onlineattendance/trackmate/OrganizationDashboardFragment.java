@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import com.onlineattendance.trackmate.databinding.FragmentOrganizationDashboardBinding;
 
 public class OrganizationDashboardFragment extends Fragment {
-
     // Declare all variables
     private LinearLayout addEmployees, removeEmployee, requestedLeave, attendance,salary;
     private FragmentOrganizationDashboardBinding binding;
@@ -37,7 +36,6 @@ public class OrganizationDashboardFragment extends Fragment {
         requestedLeave.setOnClickListener(v -> onTransferNewFragment(new OrganizationRequestedLeaveFragment()));
         attendance.setOnClickListener(v -> onTransferNewFragment(new OrganizationAttendanceFragment()));
         salary.setOnClickListener(v -> onTransferNewFragment(new OrganizationSalaryFragment()));
-
 
         return rootview;
     }

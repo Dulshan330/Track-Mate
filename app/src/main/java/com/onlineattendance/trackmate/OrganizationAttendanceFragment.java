@@ -59,7 +59,7 @@ public class OrganizationAttendanceFragment extends Fragment {
         dropdownMonthList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Month-","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"});
         dropdownDateList = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, new String[]{"-Date-","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"});
 
-
+        // Set the layout resource for dropdown views
         dropdownYearList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdownMonthList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdownDateList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,7 +83,6 @@ public class OrganizationAttendanceFragment extends Fragment {
             }
             else {
                 DatabaseReference reference = database.getReference("Emp_Attendance").child(getEmpNo).child(date);
-
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -104,7 +103,6 @@ public class OrganizationAttendanceFragment extends Fragment {
                         else {
                             Toast.makeText(getActivity(), "Attendance are not exist to related data", Toast.LENGTH_SHORT).show();
                         }
-
                     }
 
                     @Override
@@ -113,7 +111,6 @@ public class OrganizationAttendanceFragment extends Fragment {
                     }
                 });
             }
-
         });
 
         // Clear the data
@@ -123,8 +120,6 @@ public class OrganizationAttendanceFragment extends Fragment {
             dropdownDate.setSelection(0);
             empNo.setText(null);
         });
-
-
 
         return rootview;
     }

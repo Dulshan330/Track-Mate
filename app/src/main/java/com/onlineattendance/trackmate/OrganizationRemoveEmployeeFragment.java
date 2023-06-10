@@ -46,7 +46,6 @@ public class OrganizationRemoveEmployeeFragment extends Fragment {
         searchBtn = rootview.findViewById(R.id.org_remove_search);
         removeBtn = rootview.findViewById(R.id.org_remove_remove);
 
-
         // Implement a button to clear text fields
         clearBtn.setOnClickListener(v -> {
             dataClearmethod();
@@ -55,59 +54,69 @@ public class OrganizationRemoveEmployeeFragment extends Fragment {
         // Implement a button to search information of the employee
         searchBtn.setOnClickListener(v -> {
             String searchEmpNo = empNo.getText().toString();
+            // Get the reference to check vaild employee's data
             DatabaseReference reference = database.getReference("Users").child(searchEmpNo);
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        // Pass the stored data to a string
-                        String getName = snapshot.child("Name_of_the_Employee").getValue(String.class);
-                        String getNic = snapshot.child("NIC").getValue(String.class);
-                        String getDesignation = snapshot.child("Designation").getValue(String.class);
-                        String getMobile = snapshot.child("Mobile_No").getValue(String.class);
-                        String getUsername = snapshot.child("Username").getValue(String.class);
+            if (searchEmpNo.isEmpty()){
+                Toast.makeText(getActivity(), "Fields are empty!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            // Pass the stored data to a string
+                            String getName = snapshot.child("Name_of_the_Employee").getValue(String.class);
+                            String getNic = snapshot.child("NIC").getValue(String.class);
+                            String getDesignation = snapshot.child("Designation").getValue(String.class);
+                            String getMobile = snapshot.child("Mobile_No").getValue(String.class);
+                            String getUsername = snapshot.child("Username").getValue(String.class);
 
-                        // Set the retrieved data to EditText Views
-                        name.setText(getName);
-                        nic.setText(getNic);
-                        designation.setText(getDesignation);
-                        mobile.setText(getMobile);
-                        username.setText(getUsername);
+                            // Set the retrieved data to EditText Views
+                            name.setText(getName);
+                            nic.setText(getNic);
+                            designation.setText(getDesignation);
+                            mobile.setText(getMobile);
+                            username.setText(getUsername);
 
-                        Toast.makeText(getActivity(), "Data retrieved successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Data retrieved successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Not exist", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else {
-                        Toast.makeText(getActivity(), "Not exist", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getActivity(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
+            }
         });
 
         // Implement a button to remove information of the employee
         removeBtn.setOnClickListener(v -> {
             String removeEmpNo = empNo.getText().toString();
             String removeLogins = username.getText().toString();
-            DatabaseReference removeEmployee = database.getReference("Users").child(removeEmpNo);
-            DatabaseReference removeUsername = database.getReference("Employee_Login").child(removeLogins);
-            DatabaseReference removeSalary = database.getReference("EMP_Salary").child(removeEmpNo);
-            DatabaseReference removeAttendance = database.getReference("Emp_Attendance").child(removeEmpNo);
-            removeEmployee.removeValue();
-            removeUsername.removeValue();
-            removeSalary.removeValue();
-            removeAttendance.removeValue();
 
+            if (removeEmpNo.isEmpty()){
+                Toast.makeText(getActivity(), "Fields are empty!", Toast.LENGTH_SHORT).show();
+            }else {
+                // Get a DatabaseReference for removing an employee from database
+                DatabaseReference removeEmployee = database.getReference("Users").child(removeEmpNo);
+                DatabaseReference removeUsername = database.getReference("Employee_Login").child(removeLogins);
+                DatabaseReference removeSalary = database.getReference("EMP_Salary").child(removeEmpNo);
+                DatabaseReference removeAttendance = database.getReference("Emp_Attendance").child(removeEmpNo);
+                // Remove data from the respective database references
+                removeEmployee.removeValue();
+                removeUsername.removeValue();
+                removeSalary.removeValue();
+                removeAttendance.removeValue();
 
-            // call to dataClearmethod to clear text fields
-            dataClearmethod();
+                // call to dataClearmethod to clear text fields
+                dataClearmethod();
 
-            Toast.makeText(getActivity(), "Data removed successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Data removed successfully", Toast.LENGTH_SHORT).show();
+            }
         });
-
         return rootview;
     }
 

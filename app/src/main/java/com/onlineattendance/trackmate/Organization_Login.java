@@ -59,7 +59,6 @@ public class Organization_Login extends AppCompatActivity {
                     else {
                         Toast.makeText(getApplicationContext(), "Invalid Username or Password", Toast.LENGTH_SHORT).show();
                     }
-
                 }
 
                 @Override
@@ -67,10 +66,9 @@ public class Organization_Login extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Error saving data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-
         });
-
     }
+
     // Navigation method to other screen
     public void openOraganizationNavigation(){
         Intent intent = new Intent(this,Organization_Navigation.class);

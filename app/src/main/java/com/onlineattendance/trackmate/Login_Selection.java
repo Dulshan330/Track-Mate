@@ -12,12 +12,12 @@ public class Login_Selection extends AppCompatActivity {
     //  declare all variables
     private Button empBtn,orgBtn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_selection);
 
+        // Link the ID of widgets with variable
         empBtn = (Button) findViewById(R.id.button);
         orgBtn = (Button) findViewById(R.id.button2);
 
@@ -35,8 +35,6 @@ public class Login_Selection extends AppCompatActivity {
                 openOrgLogin();
             }
         });
-
-
     }
 
     // Create a method to transfer Employee_Login activity
